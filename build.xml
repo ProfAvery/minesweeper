@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<project name="minesweeper" default="compile">
+
+    <target name="init">
+        <mkdir dir="classes" />
+        <mkdir dir="dist" />
+    </target>
+
+    <target name="clean">
+        <delete dir="classes" />
+        <delete dir="dist" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="src"
+               destdir="classes"
+               includeAntRuntime="false" />
+    </target>
+
+    <target name="compile-tests" depends="compile">
+        <javac srcdir="test"
+               destdir="classes"
+               classpath="lib/junit-4.9.jar"
+               debug="true"
+               includeAntRuntime="false" />
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="net.kenytt.csuf.minesweeper.Main"
+              classpath="classes" />
+    </target>
+
+    <target name="test" depends="compile-tests">
+        <junit haltonfailure="yes">
+            <formatter type="brief" usefile="false"/>
+            <classpath>
+                <pathelement location="lib/junit-4.9.jar" />
+                <pathelement location="classes" />
+            </classpath>
+            <batchtest>
+                <fileset dir="classes" includes="**/*Test.class" />
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="dist" depends="compile">
+        <jar destfile="dist/minesweeper.jar"
+             basedir="classes"
+             excludes="**/*Test.class">
+            <manifest>
+                <attribute name="Main-Class"
+                    value="net.kenytt.csuf.minesweeper.Main" />
+            </manifest>
+         </jar>
+    </target>
+
+</project>
