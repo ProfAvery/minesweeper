@@ -11,10 +11,21 @@
         <delete dir="dist" />
     </target>
 
+     <path id="spring-classpath">
+          <fileset dir="lib">
+               <include name="*.jar" />
+          </fileset>
+
+          <pathelement path="classes" />
+     </path>
+
     <target name="compile" depends="init">
+        <copy file="src/beans.xml" todir="classes" />
         <javac srcdir="src"
                destdir="classes"
-               includeAntRuntime="false" />
+               includeAntRuntime="false">
+            <classpath refid="spring-classpath" />
+        </javac>
     </target>
 
     <target name="compile-tests" depends="compile">
@@ -26,8 +37,9 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="net.kenytt.csuf.minesweeper.Main"
-              classpath="classes" />
+        <java classname="net.kenytt.csuf.minesweeper.Main">
+            <classpath refid="spring-classpath" />
+        </java>
     </target>
 
     <target name="test" depends="compile-tests">

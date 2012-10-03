@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="game" class="net.kenytt.csuf.minesweeper.Main">
+		<constructor-arg ref="randomGenerator" />
+	</bean>
+	
+	<bean id="randomGenerator" class="net.kenytt.csuf.minesweeper.RandomGameGenerator" />
+	
+	<bean id="staticGenerator" class="net.kenytt.csuf.minesweeper.StaticGameGenerator">
+		<property name="gameNumber" value="42" />
+	</bean>
+
+</beans>

@@ -1,9 +1,16 @@
 package net.kenytt.csuf.minesweeper;
 
+import org.springframework.context.*;
+import org.springframework.context.support.*;
+
 public class Main {
     private MineField field;
     private java.io.Console console;
 
+	public Main(GameGenerator generator) {
+		this(generator.getGameNumber());
+	}
+	
     public Main(long gameNumber) {
         this(gameNumber, System.console());
     }
@@ -113,7 +120,9 @@ public class Main {
             System.exit(1);
         }
 
-        Main game = new Main(gameNumber);
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+		Main game = (Main) ctx.getBean("game");
+
         game.run();
     }
 }
